@@ -14,7 +14,7 @@ You need [Node.js](https://nodejs.org/) 18 or newer and a webcam (optional: ever
 keyboard).
 
 ```bash
-git clone 
+git clone https://github.com/kocawolf46/wondersnap.git 
 cd wondersnap
 npm install
 npm start
