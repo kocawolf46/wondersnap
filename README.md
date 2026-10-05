@@ -1,160 +1,160 @@
 # WonderSnap
 
-**Gesture-controlled 3D models made of glowing light particles, running entirely in your browser.**
+* Tamamen tarayıcınızda çalışan, parlayan ışık parçacıklarından oluşan hareket kontrollü 3D modeller.**
 
-Snap your fingers in front of your webcam and up to 250,000 GPU particles swirl into existence. Make a fist and they
-form the Eiffel Tower, a beating heart or a V8 engine. Open your hand and the model morphs into the next one, or
-explodes into a labelled diagram of every part. No mouse, no controller, no install beyond Node.js.
+Parmaklarınızı web kameranızın önüne çekin ve 250.000'e kadar GPU parçacığı var olur. Bir yumruk yap ve onlar
+eyfel Kulesi'ni, atan bir kalbi veya bir V8 motorunu oluşturun. Elinizi açın ve model bir sonrakine dönüşür veya
+her parçanın etiketli bir diyagramına patlar. Fare yok, denetleyici yok, düğümün ötesine kurulum yok.js.
 
-![WonderSnap showing a beating human heart made of particles](docs/preview.png)
+![Parçacıklardan oluşan atan bir insan kalbini gösteren WonderSnap] (dokümanlar / önizleme.png)
 
-## Quick start
+## Hızlı başlangıç
 
-You need [Node.js](https://nodejs.org/) 18 or newer and a webcam (optional: everything also works with the mouse and
-keyboard).
+İhtiyacın olan [Node.js ](https://nodejs.org /) 18 veya daha yenisi ve bir web kamerası (isteğe bağlı: her şey fare ile de çalışır ve
+klavye).
 
-```bash
-git clone https://github.com/kocawolf46/wondersnap.git 
-cd wondersnap
-npm install
-npm start
+"'bash
+git klonu https://github.com/kocawolf46/wondersnap.git 
+wondersnap cd'si
+npm kurulumu
+uöm'nin başlangıcı
 ```
 
-Then open **http://localhost:5173** in Chrome or Edge and click **Start with camera**, or **Continue without camera**
-to drive it with the on-screen buttons and keyboard.
+Sonra aç **http://localhost:5173 * * Chrome veya Edge'de * * Kamerayla başla ** veya * * Kamerasız devam Et'i tıklayın**
+ekran düğmeleri ve klavye ile sürmek için.
 
-> The browser only allows camera access on `localhost` or `https`, which is why the app comes with its own tiny
-> local server. To use a different port: `npm start -- 8080`.
+> Tarayıcı yalnızca 'localhost` veya 'https'de kamera erişimine izin verir, bu nedenle uygulama kendi küçük özelliği ile birlikte gelir
+> yerel sunucu. Farklı bir bağlantı noktası kullanmak için: 'npm start -- 8080'.
 
-## How it works
+## Nasıl çalışır
 
-| Layer | What it does |
+/ Katman / Ne yapar |
 |---|---|
-| **Hand tracking** | [MediaPipe Hand Landmarker](https://ai.google.dev/edge/mediapipe/solutions/vision/hand_landmarker) tracks up to two hands (21 landmarks each) from the webcam, fully on-device |
-| **Gesture recognition** | Custom classifiers turn landmarks into poses (fist, open, point, pinch, peace), a finger-snap detector, hand twist/tilt and two-hand zoom, fed through a debouncer and a state machine |
-| **Particle engine** | A hand-written WebGL2 renderer. Particle physics runs on the GPU with transform feedback: no Three.js, no game engine, no framework |
-| **Models** | 33 procedural models built from real measurements and sampled into point clouds, with named parts that can explode, glow and be pulled out |
-| **Server** | A zero-dependency Node.js static server (`server.mjs`) |
+/ ** El takibi * * / [MediaPipe El Yer İmi] (https://ai .Google.dev / edge / mediapipe / solutions / vision / hand_landmarker) web kamerasından tamamen cihaz üzerinde iki ele kadar (her biri 21 yer işareti) izler |
+/ * * Jest tanıma * / / Özel sınıflandırıcılar, yer işaretlerini pozlara dönüştürür (yumruk, açık, nokta, tutam, barış), bir parmak çırpıda dedektör, elle döndürme / eğme ve iki elle yakınlaştırma, bir debouncer ve bir durum makinesinden beslenir |
+/ * * Parçacık motoru * * / elle yazılmış bir WebGL2 oluşturucu. Parçacık fiziği gpu'da dönüşüm geri bildirimi ile çalışır: üç yok.js, oyun motoru yok, çerçeve yok |
+/ ** Modeller * * / Patlayabilen, parlayabilen ve dışarı çekilebilen adlandırılmış parçalarla gerçek ölçümlerden oluşturulmuş ve nokta bulutlarına örneklenmiş 33 prosedür modeli |
+/ * * Sunucu * * / sıfır bağımlılık Düğümü.js statik sunucusu ('sunucu.mjs`) |
 
-Nothing is sent anywhere: the video never leaves your machine.
+Hiçbir yere hiçbir şey gönderilmez: video makinenizi asla terk etmez.
 
-## Gestures
+## Jestler
 
-| Gesture | What it does |
+/ Jest / Ne yapar |
 |---|---|
-| 🫰 **Snap** | Summon the particles, or dissolve the current model |
-| ✊ **Fist** | Form the wonder, organ or machine |
-| ✋ **Open hand** | Wonders morph to the next one. Organs, engines and vehicles **explode**: how far you open your hand sets how far the parts fly apart, and closing it puts them back together |
-| 🔄 **Twist / raise your hand** | Turn and tilt the formed model |
-| ☝️ **Point** | Hold your finger on a part to select it. It glows, and a card explains what it does |
-| 🤏 **Pinch** | Pull the selected part out toward you; pinch again to put it back |
-| 🙌 **Two hands** | Move them apart or together to zoom |
-| ✌️ **Peace** | Jump to the next model |
+/Snap ** Snap ** / Parçacıkları çağır veya mevcut modeli çöz |
+|Fist ** Yumruk * / / Harikayı, organı veya makineyi oluşturun |
+/ hand ** Açık el ** / Harikalar bir sonrakine dönüşür. Organlar, motorlar ve araçlar * * patlar **: elinizi ne kadar açtığınız, parçaların ne kadar uzağa uçtuğunu belirler ve onu kapatmak onları tekrar bir araya getirir |
+/ 🔄 ** Bükün / elinizi kaldırın * / / Oluşan modeli çevirin ve eğin |
+/ ️ ️ ** Nokta ** / Seçmek için parmağınızı bir parçanın üzerinde tutun. Parlıyor ve bir kart ne yaptığını açıklıyor |
+/ 🤏 ** Çimdik ** / Seçilen parçayı kendinize doğru çekin; geri koymak için tekrar çimdikleyin |
+/ 🙌 ** İki el ** / Yakınlaştırmak için onları birbirinden ayırın veya birlikte hareket ettirin |
+/ ✌ ️ ** Barış ** | Bir sonraki modele atla /
 
-## Keyboard and mouse
+## Klavye ve fare
 
-| Key | Action |
+/ Anahtar / Eylem |
 |---|---|
-| `Space` | Snap |
-| `F` / `O` / `V` | Fist / open hand / peace sign |
-| `←` `→` | Previous / next model |
-| `E`, `↑` `↓`, mouse wheel | Explode amount |
-| `+` `-` `0`, ctrl + wheel | Zoom |
-| `C` | Camera on/off |
-| `L` | Part labels |
-| `R` | Auto-rotate |
-| `G` | Hand rotation on/off |
-| `X` | Cut-away cross-section (`,` and `.` nudge the plane) |
-| `Q` | Quiz mode |
-| `M` | Voice commands and read-aloud |
-| `K` | Record a video |
-| `D` | Play the demo |
-| `I` / `Esc` | Describe / deselect the selected part |
-| `H` | Help |
+/ ' Boşluk' / Geçmeli |
+/ `F ` | ` O ` / ' V ' / Yumruk / açık el / barış işareti |
+/ '←"→'/ Önceki | sonraki model /
+/ ` E`, '↑`↓', fare tekerleği | Patlama miktarı /
+| `+` `-` `0`, ctrl + tekerlek / Yakınlaştır |
+| ' C ' / Kamera açık / kapalı |
+/ ' L ' / Parça etiketleri |
+| ' R ' / Otomatik döndür |
+/ 'G ' / El dönüşü açık / kapalı |
+| 'X ` / Kesik kesit ( ` , 've'.'uçağı dürtün) |
+| 'Q' | Sınav modu /
+/ ' M ' / Sesli komutlar ve sesli okuma |
+/ ' K ' / Videoya kaydet |
+/ ' D ' / Demoyu çal |
+/ ' İ ` | ` Esc ' / Açıkla / seçili parçanın seçimini kaldır |
+| ' H ' / Yardım |
 
-Click a part to select it, drag to rotate.
+Bir parçayı seçmek için tıklayın, döndürmek için sürükleyin.
 
-## Features
+## Özellikler
 
-- **Beating heart and breathing lungs.** The heart contracts in a lub-dub rhythm at 72 bpm, the lungs inflate every
-  4.5 s, and pulses of light travel through them like blood or air.
-- **Exploded views with named parts.** Every part has a leader-line label saying what it does.
-- **Quiz mode.** "Find: Hippocampus": point at (or click) the right part. Five questions, with a score.
-- **Voice control.** Say "show me the heart", "open it up", "where is the right atrium", "zoom in", "quiz" and more.
-  Parts are read aloud with speech synthesis (Chrome or Edge).
-- **Cut-away.** A cutting plane follows your hand and reveals a glowing cross-section.
-- **Recording.** Save a WebM video of the scene.
+- ** Kalp atışı ve akciğerleri solumak.** Kalp, dakikada 72 atımlık bir lub-dub ritminde kasılır, akciğerler her seferinde şişer.
+  4.5 saniye ve ışık darbeleri kan veya hava gibi içlerinden geçer.
+- ** Adlandırılmış parçalarla patlatılmış görünümler.** Her parçanın ne yaptığını söyleyen bir lider çizgisi etiketi vardır.
+- ** Sınav modu.** "Bul: Hipokampus": sağ kısma gelin (veya tıklayın). Bir puanla beş soru.
+- ** Ses kontrolü.** "Bana kalbi göster", "aç", "sağ atriyum nerede", "yakınlaştır", "sınav" ve daha fazlasını söyleyin.
+  Parçalar konuşma sentezi (Krom veya Kenar) ile yüksek sesle okunur.
+-Kesik kesik.* Bir kesme düzlemi elinizi takip eder ve parlayan bir kesit ortaya çıkarır.
+- ** Kayıt.** Sahnenin bir WebM videosunu kaydedin.
 
-## Models
+## Modeller
 
-| Category | Models |
+/ Kategori / Modeller |
 |---|---|
-| **Wonders (11)** | Turtle Tower, Eiffel Tower, Statue of Liberty, Burj Khalifa, Great Pyramid, Colosseum, Leaning Tower of Pisa, Taj Mahal, Big Ben, Christ the Redeemer, Sydney Opera House |
-| **Anatomy (10)** | Brain, beating Heart, Kidney, breathing Lungs, Eye, Ear, Tooth, Skull, Skeleton, Human Body (skin, organs, nerves, arteries, veins, skeleton) |
-| **Biology (2)** | DNA double helix that unzips, Animal cell |
-| **Engines (4)** | Inline-4, Supercharged HEMI V8, Turbofan jet, 9-cylinder radial |
-| **Vehicles (4)** | Sports car, Motorcycle, Airliner, Saturn V (with stage separation) |
-| **Machines (2)** | Mechanical wristwatch, EV battery pack (280 cells, busbars, cooling, BMS) |
+/ ** Harikalar (11) * * / Kaplumbağa Kulesi, Eyfel Kulesi, Özgürlük Anıtı, Burç Halife, Büyük Piramit, Kolezyum, Pisa Kulesi, Tac Mahal, Big Ben, Kurtarıcı İsa, Sidney Opera Binası |
+/ * * Anatomi (10) * / / Beyin, atan Kalp, Böbrek, nefes alan Akciğerler, Göz, Kulak, Diş, Kafatası, iskelet, insan vücudu |cilt, organlar, sinirler, arterler, damarlar, iskelet) /
+/ ** Biyoloji (2) * * / Fermuarını açan DNA çift sarmalı, Hayvan hücresi |
+/ * * Motorlar (4) * / / Sıralı-4, Süper Şarjlı HEMİ V8, Turbofan jet, 9 silindirli radyal |
+/ * * Araçlar (4) * / / Spor araba, Motosiklet, Uçak, Saturn V (kademe ayrımlı) |
+/ * * Makineler (2) * / / Mekanik kol saati, EV pil takımı (280 hücre, baralar, soğutma, BMS) |
 
-## Gesture sensitivity
+## Hareket hassasiyeti
 
-The **Gesture sensitivity** control in the status panel defaults to **Standard**, which preserves the original gesture
-thresholds. **More forgiving** slightly relaxes static hand-pose recognition and openness. Snap and pinch detection are
-unchanged, and the selection lasts only for the current page session.
+Durum panelindeki * * Hareket hassasiyeti * * kontrolü, orijinal hareketi koruyan ** Standart ** olarak varsayılandır
+eşikler. ** Daha bağışlayıcı * * statik el pozu tanıma ve açıklığı hafifçe rahatlatır. Snap ve tutam algılama
+değişmez ve seçim yalnızca geçerli sayfa oturumu için sürer.
 
-## URL options
+## URL seçenekleri
 
-| Option | Effect |
+/ Seçenek / Efekt |
 |---|---|
-| `?n=250000` | Particle count |
-| `?model=12` | Start on a given model |
-| `?autostart=camera` / `?autostart=nocamera` | Skip the start screen |
-| `?trails=0` | Turn off particle trails |
-| `?dpr=1` | Force the device pixel ratio (useful on slower GPUs) |
+| `?N = 250000 ' / Parçacık sayısı |
+| `?model = 12' / Belirli bir modelde başla |
+| `?otomatik başlatma = kamera '/'?otomatik başlatma = nocamera ' / Başlangıç ekranını atla /
+| `?yollar = 0` / Parçacık yollarını kapat /
+| `?dpr= 1` | Aygıt piksel oranını zorla (daha yavaş gpu'larda kullanışlıdır) /
 
-## Tests
+## Testler
 
-39 end-to-end and unit tests with [Playwright](https://playwright.dev/), driving the real app with synthetic hands on
-a deterministic clock.
+39 [Oyun Yazarı] ile uçtan uca ve birim testleri (https://playwright .dev /), gerçek uygulamayı sentetik ellerle sürmek
+deterministik bir saat.
 
-```bash
-npx playwright install chromium   # one time
-npm test
+"'bash
+npx oyun yazarı chromium'u bir kez yükleyin
+npm testi
 ```
 
-| Spec | Covers |
+/ Spec / Kapaklar |
 |---|---|
-| `app.spec.js` | The full gesture story, every model, explode/contract, keyboard, wheel, tabs, demo, phone layout, hand twist and tilt |
-| `features.spec.js` | Heartbeat and breathing, two-hand zoom, point-to-pick, pinch-to-pull, quiz, voice commands, cut-away, video recording |
-| `camera.spec.js` | Real `getUserMedia` to MediaPipe on Chromium's fake webcam, plus the camera-denied fallback |
-| `gpu.spec.js` | The GPU physics shader matches its CPU twin to ~1e-7 in every mode |
-| `logic.spec.js` | Pose classifiers, snap detector, debouncer, state machine, controller, voice-command parser |
-| `models.spec.js` | Every model is deterministic, finite and fast, with real measurements and correctly exploding parts |
+/ 'uygulama.spesifikasyon.js' / tam jest hikayesi, her model, patlama / sözleşme, klavye, tekerlek, sekmeler, demo, telefon düzeni, elle döndürme ve eğme /
+/ 'özellikler.spesifikasyon.js' / Kalp atışı ve nefes alma, iki elle yakınlaştırma, noktadan noktaya seçme, sıkıştırarak çekme, bilgi yarışması, sesli komutlar, kesme, video kaydı |
+/ 'kamera.spesifikasyon.js '/ Chromium'un sahte web kamerasında mediapipe'a gerçek 'getUserMedia' ve ayrıca kamera tarafından reddedilen geri dönüş |
+/ 'gpu.spesifikasyon.js / / GPU fizik gölgelendiricisi, CPU ikizini her modda ~ 1e-7 ile eşleştirir |
+/ 'mantık.spesifikasyon.js ' / Poz sınıflandırıcılar, snap dedektörü, debouncer, durum makinesi, kontrolör, sesli komut ayrıştırıcı |
+/ 'modeller.spesifikasyon.js ' / Her model deterministik, sonlu ve hızlıdır, gerçek ölçümler ve doğru patlayan parçalar ile |
 
-## Project structure
+## Proje yapısı
 
 ```
-index.html, styles.css     page and styles
-server.mjs                 zero-dependency static server
-models/                    MediaPipe hand landmark model
-src/app.js                 render loop, explode, zoom, picking, quiz, cut-away, HUD, labels, demo
-src/hands.js               webcam + MediaPipe Hand Landmarker
-src/features.js            voice commands, read-aloud, video recorder
-src/gl/                    WebGL2 shaders and renderer (transform-feedback physics)
-src/logic/                 gestures, state machine, controller, CPU physics twin
-src/lib/                   vector math, samplers, procedural shapes
-src/models/                wonders, anatomy, biology, engines, vehicles, machines
-tests/                     Playwright specs
+indeks.html, stiller.css sayfası ve stilleri
+sunucu.mjs sıfır bağımlılık statik sunucusu
+modeller / MediaPipe el dönüm noktası modeli
+src / uygulama.js oluşturma döngüsü, patlat, yakınlaştır, toplama, sınav, kesme, HUD, etiketler, demo
+src / eller.js web kamerası + MediaPipe el Landmarker
+src / özellikler.js sesli komutlar, sesli okuma, video kaydedici
+src / gl / WebGL2 gölgelendiriciler ve oluşturucu (dönüşüm-geri bildirim fiziği)
+src / mantık / hareketler, durum makinesi, kontrolör, CPU fiziği ikiz
+src / lib / vektör matematiği, örnekleyiciler, prosedürel şekiller
+src/modeller/harikalar anatomi biyoloji motorlar araçlar makineleri
+testler / oyun yazarlarının özellikleri
 ```
 
-## Troubleshooting
+## Sorun Giderme
 
-- **Camera doesn't start:** open the app via `http://localhost:5173`, not by double-clicking `index.html`, and allow
-  camera access when the browser asks.
-- **Hand tracking never loads:** run `npm install` first; the tracking runtime is served from `node_modules`.
-- **Low frame rate:** try `http://localhost:5173/?n=100000&dpr=1`.
-- **Port already in use:** `npm start -- 8080` and open `http://localhost:8080`.
+- ** Kamera başlamıyor` * * uygulamayı 'http://localhost:5173 ', ' dizini çift tıklatarak değil.html' ve izin ver
+  tarayıcı sorduğunda kameraya erişim.
+- ** El takibi asla yüklenmez: * * önce `npm yüklemesini' çalıştırın; izleme çalışma zamanı 'mode_modules' öğesinden sunulur.
+- ** Düşük kare hızı: * * deneyin `http://localhost:5173 /?n = 100000& dpr = 1'.
+- ** Zaten kullanımda olan bağlantı noktası` ** 'npm başlat -- 8080' ve aç 'http://localhost:8080 '.
 
-## License
+## Lisans
 
-[MIT](LICENSE) © 2026 Ali KOCA
+[MIT] (LİSANS) © 2026 Ali KOCA
