@@ -14,10 +14,10 @@ her parçanın etiketli bir diyagramına patlar. Fare yok, denetleyici yok, dü�
 klavye).
 
 "'bash
-git klonu https://github.com/kocawolf46/wondersnap.git 
-wondersnap cd'si
-npm kurulumu
-uöm'nin başlangıcı
+git clone  https://github.com/kocawolf46/wondersnap.git 
+cd wondersnap
+npm install
+npm start
 ```
 
 Sonra aç **http://localhost:5173 * * Chrome veya Edge'de * * Kamerayla başla ** veya * * Kamerasız devam Et'i tıklayın**
